@@ -16,7 +16,7 @@
             "sorenfl"
         ],
         "bot_channel": 883762410962436157,
-        "last_tracker_message": 974214939633909760,
+        "last_tracker_message": 974232030135078962,
         "notifies": [
             329996760053317632
         ]
@@ -35,5 +35,20 @@
         "Sambria": 1651979417202,
         "secretage001": 1651854269504,
         "sorenfl": 1648845328572
+    },
+    "uuid_cache": {
+        "Juenez": "fd146123ebd94fd7b27c1a59af6f74b9",
+        "ScorchChamp": "3b105f27ec6e479dadf66096fa9c5a60",
+        "levaloff": "90aca751e30f4e2d84186ae5382c5cd6",
+        "Technoblade": "b876ec32e396476ba1158438d83c67d4",
+        "killerslayer131": "c35a3e92db744979ab157350078d1b9a",
+        "KudaBerry": "42ecf2301a53495194fe75f73f368ec0",
+        "Scott": "e0564f417d384f3c9bfdf250cd001982",
+        "netherranger": "c3d2c9c1a29e4b5b8552ed3b7eb1d9a9",
+        "stridergL": "b8f963a0acde43d999d7a411055d84ef",
+        "noahvincent1": "9c3065d01e814dce82355fdcee09acd3",
+        "Sambria": "526b1075ffd84649affad09ae55178f3",
+        "secretage001": "526796ea4e164828b5d8932e1276721c",
+        "sorenfl": "674b53d70f3046b5b707970b288b82d9"
     }
 }

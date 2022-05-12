@@ -15,14 +15,20 @@ config = dotenv_values(".env")
 
 def startBot(token): bot.run(token)
 def getBasePath(file): return os.path.dirname(os.path.realpath(file))
-
+def getUuid(username):
+    uuid = readData("uuid_cache", username)
+    if uuid == None: 
+        uuid = MojangAPI.getUUIDFromUsername(username)
+        storeData("uuid_cache", username, uuid)
+    return uuid
 
 API_KEY = config["API_KEY"]
 BASE_PATH = getBasePath(__file__)
 DATA_FILE = BASE_PATH + "/data.json"
 
 def getLastLogin(username):
-    data = requests.get("https://api.hypixel.net/player", params={"key": API_KEY, "uuid": MojangAPI.getUUIDFromUsername(username)}).json()
+    uuid = getUuid(username)
+    data = requests.get("https://api.hypixel.net/player", params={"key": API_KEY, "uuid": uuid}).json()
     if not "player" in data: return 0
     if not "lastLogin" in data["player"]: return 0
     return data["player"]["lastLogin"]
@@ -62,14 +68,18 @@ async def generateListEmbed(guild_id):
 
     for player in trackers:
         names += f"{player}\n"
-        dates += f"<t:{int(getLastLogin(player)/1000)}>\n"
         last_online = readData("players", player)
         new_online = getLastLogin(player)
+        if new_online == 0:
+            print("Something went wrong with player: " + player)
+            dates+="Unknown...\n"
+            continue
+        dates += f"<t:{int(new_online/1000)}>\n"
         if last_online == None: 
             storeData("players", player, new_online)
             continue
         if last_online + 10 < new_online:
-            embed = embed=discord.Embed(description=f"{player} WENT ONLINE AT <t:{int(new_online/1000)}>!", color=discord.Color.red())
+            embed = discord.Embed(title="", description=f"{player} WENT ONLINE AT <t:{int(new_online/1000)}>!", color=discord.Color.red())
             await (await bot.fetch_channel(readData(guild_id, "bot_channel"))).send(content="@everyone", embed=embed)
             for member in readData(guild_id, "notifies"):
                 user = await bot.fetch_user(int(member))
@@ -108,15 +118,18 @@ async def setThisChannel(ctx):
 
 @bot.command()
 async def lastlogin(ctx, arg):
-    await ctx.reply(embed=discord.Embed(title=arg, description=f"Last login: <t:{int(int(getLastLogin(arg))/1000)}>"))
+    await ctx.reply(embed=discord.Embed(title=arg, description=f"Last login: <t:{int(int(getLastLogin(arg))/1000)}>", color=discord.Color.red()), delete_after=5)
 
 @bot.command()
 async def notifyme(ctx):
     notifies = readData(ctx.guild.id, "notifies")
     if not notifies: notifies = []
+    if ctx.author.id in notifies:
+        await ctx.reply(embed=discord.Embed(description="You are already being notified!", color=discord.Color.red()), delete_after=5)
+        return
     notifies.append(ctx.author.id)
     storeData(ctx.guild.id, "notifies", notifies)
-    await ctx.reply(embed=discord.Embed(description=f"You will now be notified when someone gets online!", delete_after=5))
+    await ctx.reply(embed=discord.Embed(description=f"You will now be notified when someone gets online!", delete_after=5, color=discord.Color.green()))
 
 
 @bot.command()
@@ -132,7 +145,7 @@ async def add(ctx, arg):
 async def runTask(task):
     while True:
         await task()
-        await asyncio.sleep(10)
+        await asyncio.sleep(20)
 
 @bot.event
 async def on_ready():
