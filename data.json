@@ -1,0 +1,39 @@
+{
+    "883432869450620958": {
+        "trackers": [
+            "Juenez",
+            "ScorchChamp",
+            "levaloff",
+            "Technoblade",
+            "killerslayer131",
+            "KudaBerry",
+            "Scott",
+            "netherranger",
+            "stridergL",
+            "noahvincent1",
+            "Sambria",
+            "secretage001",
+            "sorenfl"
+        ],
+        "bot_channel": 883762410962436157,
+        "last_tracker_message": 974214939633909760,
+        "notifies": [
+            329996760053317632
+        ]
+    },
+    "players": {
+        "Juenez": 1652300102840,
+        "ScorchChamp": 1652341939076,
+        "levaloff": 1652301073100,
+        "Technoblade": 0,
+        "killerslayer131": 0,
+        "KudaBerry": 1651715548519,
+        "Scott": 0,
+        "netherranger": 1641024356689,
+        "stridergL": 1639342286039,
+        "noahvincent1": 1652298449262,
+        "Sambria": 1651979417202,
+        "secretage001": 1651854269504,
+        "sorenfl": 1648845328572
+    }
+}
